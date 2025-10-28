@@ -1,13 +1,27 @@
 namespace BugStore.Models;
 
-public class Order
-{
-    public Guid Id { get; set; }
+public class Order : Entity
+{   
     public Guid CustomerId { get; set; }
-    public Customer Customer { get; set; }
+    public virtual Customer Customer { get; private set; }
     
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 
-    public List<OrderLine> Lines { get; set; } = null;
+    public List<OrderLine> Lines { get; private set; } = null;
+
+    public void SetCustomer(Customer customer)
+    {
+        ArgumentNullException.ThrowIfNull(customer);
+        Customer = customer;
+        CustomerId = customer.Id;
+    }
+
+    public void SetLines(List<OrderLine> lines)
+    {
+        ArgumentNullException.ThrowIfNull(lines);
+        Lines = lines;
+    }
+
+
 }

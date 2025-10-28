@@ -1,8 +1,7 @@
 namespace BugStore.Models;
 
-public class Product
-{
-    public Guid Id { get; set; }
+public class Product : Entity
+{   
     public string Title { get; set; }
     public string Description { get; set; }
     public string Slug { get; set; }
