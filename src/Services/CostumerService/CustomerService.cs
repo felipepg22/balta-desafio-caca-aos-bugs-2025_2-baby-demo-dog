@@ -72,10 +72,17 @@ namespace BugStore.Services.CostumerService
             }
         }
 
-        public async Task<Result<Exception, bool>> UpdateAsync(Customer entity, CancellationToken cancellationToken)
+        public async Task<Result<Exception, bool>> UpdateAsync(Guid id, Customer entity, CancellationToken cancellationToken)
         {
             try
             {
+                var customer = await GetByIdAsync(id, cancellationToken);
+
+                if (customer.Error is not null)
+                {
+                    return Result<Exception, bool>.Failure(customer.Error);
+                }
+
                 await _customerRepository.UpdateAsync(entity, cancellationToken);
                 return Result<Exception, bool>.Success(true);
             }

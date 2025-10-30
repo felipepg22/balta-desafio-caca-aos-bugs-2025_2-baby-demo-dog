@@ -2,6 +2,6 @@
 {
     public class Entity
     {
-        public Guid Id { get; } = Guid.CreateVersion7();
+        public Guid Id { get; set; }
     }
 }
