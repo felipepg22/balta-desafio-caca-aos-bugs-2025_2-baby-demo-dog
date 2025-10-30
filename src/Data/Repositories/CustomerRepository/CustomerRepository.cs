@@ -15,6 +15,8 @@ namespace BugStore.Data.Repositories.CustomerRepository
         public async Task AddAsync(Customer entity, CancellationToken cancellationToken)
         {
             await _context.Customers.AddAsync(entity, cancellationToken);
+
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
@@ -36,9 +38,9 @@ namespace BugStore.Data.Repositories.CustomerRepository
 
         public async Task UpdateAsync(Customer entity, CancellationToken cancellationToken)
         {
-            await _context.Customers.Update(entity)
-                                   .ReloadAsync(
-                                  cancellationToken);
+            _context.Customers.Update(entity);                                   
+
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

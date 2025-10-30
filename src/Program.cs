@@ -1,9 +1,11 @@
+using BugStore.Data;
 using BugStore.Data.Repositories.CustomerRepository;
 using BugStore.Extensions;
 using BugStore.Infra;
 using BugStore.Models;
 using BugStore.Services.CostumerService;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,12 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 app.MapGet("/", () => "Hello World!");
 

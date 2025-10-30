@@ -16,6 +16,7 @@ namespace BugStore.Services.CostumerService
         {
             try
             {
+                entity.Id = Guid.CreateVersion7();
                 await _customerRepository.AddAsync(entity, cancellationToken);
                 return Result<Exception, bool>.Success(true);
             }
